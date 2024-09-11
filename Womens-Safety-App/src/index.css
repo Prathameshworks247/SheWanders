@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   align-items: center; 
-  background-color: black;
+  background-color: rgb(194, 154, 154);
 }
 h1{
   font-weight: bolder;
