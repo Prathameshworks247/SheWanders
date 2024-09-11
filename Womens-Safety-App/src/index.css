@@ -1,59 +1,94 @@
-.login-card{
+.login-card {
   background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
   border-radius: 19px;
   justify-content: center;
   display: flex;
-  width: 600px;
+  flex-wrap: wrap;
+  width: 50%; /* Use percentage for responsiveness */
+  max-width: 600px; /* Limit max width for large screens */
   align-items: center;
-  padding-bottom: 40px;
-  padding-top: 40px;
+  padding: 40px 20px; /* Consistent padding */
   font-family: sans-serif;
-  
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
 }
 
-.form{
+.form {
   justify-content: center;
   gap: 20px;
   display: flex;
   flex-direction: column;
+  width: 100%; /* Make form take full width of the card */
 }
-#root{
+
+#root {
   display: flex;
   justify-content: center;
-  align-items: center; 
-  background-color: black;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('./assets/back.png');
+  width: 100vw; /* Make it responsive to the viewport width */
+  height: 100vh; /* Make it responsive to the viewport height */
+  padding-bottom: 200px;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
-h1{
+
+h1 {
   font-weight: bolder;
-  font-family:monospace;
+  font-family: monospace;
 }
 
 img {
-  width: 200px; 
-  height: 200px; 
+  width: 200px;
+  height: 200px;
 }
 
-
-           
-         
-         
 .btn {
-  background-image: linear-gradient(to right, #DE6262 0%, #FFB88C  51%, #DE6262  100%);
+  background-image: linear-gradient(to right, #DE6262 0%, #FFB88C 51%, #DE6262 100%);
   margin: 10px;
   padding: 15px 45px;
   text-align: center;
   text-transform: uppercase;
   transition: 0.5s;
   background-size: 200% auto;
-  color: white;            
+  color: white;
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
   display: block;
 }
 
 .btn:hover {
-  background-position: right center; /* change the direction of the change here */
+  background-position: right center;
   color: #fff;
   text-decoration: none;
 }
 
+
+@media (max-width: 1024px) {
+  .login-card {
+    width: 70%; 
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    width: 85%; 
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    width: 95%; 
+    padding: 30px 10px;
+  }
+
+  .btn {
+    padding: 10px 30px;
+  }
+
+  img {
+    width: 150px; 
+    height: 150px;
+  }
+}
