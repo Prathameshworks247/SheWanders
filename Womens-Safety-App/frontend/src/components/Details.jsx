@@ -1,14 +1,14 @@
 import React, { useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import womenpic from '../assets/protection.png';
-import { GoogleMap, useJsApiLoader, Autocomplete, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Autocomplete, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 
 const mapContainerStyle = { width: '100%', height: '400px' };
 const center = { lat: 20.5937, lng: 78.9629 }; // India’s coordinates
 
 export default function Details() {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyAG0n8gOgNs3K553GuINenuDG1Qdfa8A4s', // Replace with a valid API key
+    googleMapsApiKey: 'AIzaSyCl0C-lGa1dKfuPPypqbU87sCA2ATcPTPY', // Replace with a valid API key
     libraries: ['places'],
   });
 
@@ -16,6 +16,7 @@ export default function Details() {
   const toRef = useRef(null);
 
   const [formData, setFormData] = useState({
+    name:"",
     from: '',
     to: '',
     phone: '',
@@ -25,6 +26,7 @@ export default function Details() {
   });
 
   const [activeMarker, setActiveMarker] = useState('from'); // Tracks which marker to set (From/To)
+  const [directionsResponse, setDirectionsResponse] = useState(null); // For holding directions response
 
   const handlePlaceChanged = (field) => {
     const autocomplete = field === 'from' ? fromRef.current : toRef.current;
@@ -37,6 +39,32 @@ export default function Details() {
         [field]: place.formatted_address,
         [`${field}Coords`]: { lat: location.lat(), lng: location.lng() },
       }));
+
+      // Fetch directions if both locations are set
+      if (field === 'to' && formData.fromCoords.lat) {
+        fetchDirections(formData.fromCoords, { lat: location.lat(), lng: location.lng() });
+      }
+    }
+  };
+
+  const fetchDirections = (origin, destination) => {
+    if (origin && destination) {
+      const directionsService = new window.google.maps.DirectionsService();
+
+      directionsService.route(
+        {
+          origin,
+          destination,
+          travelMode: window.google.maps.TravelMode.DRIVING, // Change travel mode if needed
+        },
+        (response, status) => {
+          if (status === window.google.maps.DirectionsStatus.OK) {
+            setDirectionsResponse(response);
+          } else {
+            console.error('Error fetching directions:', response);
+          }
+        }
+      );
     }
   };
 
@@ -66,16 +94,28 @@ export default function Details() {
 
   return isLoaded ? (
     <div className="login-card mb-3 mt-3 text-dark shadow p-4">
-      <div className="text-center">
+      <div className="profile-image text-center ">
         <img src={womenpic} alt="profile" className="img-fluid" style={{ width: '150px' }} />
       </div>
 
-      <div className="col-12 col-md-6 mx-auto mt-4">
-        <h1 className="text-center mb-4">Enter Details</h1>
+      <div className="form-container col-12 col-md-6 mx-auto mt-4">
+        <div className="mb-4 w-100 fs-2 fw-bolder font-monospace">Enter Details</div>
 
         <form className="form" onSubmit={handleSubmit}>
+            <div className="mb-3">
+            <label>User Name</label>
+              <input
+                className="form-control"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter Username"
+                required
+              />
+          </div>
           <div className="mb-3">
-            <label>From:</label>
+            <label>Starting Point:</label>
             <Autocomplete
               onLoad={(ref) => (fromRef.current = ref)}
               onPlaceChanged={() => handlePlaceChanged('from')}
@@ -87,12 +127,13 @@ export default function Details() {
                 value={formData.from}
                 onChange={handleChange}
                 placeholder="Enter From Location"
+                required
               />
             </Autocomplete>
           </div>
 
           <div className="mb-3">
-            <label>To:</label>
+            <label>Destination:</label>
             <Autocomplete
               onLoad={(ref) => (toRef.current = ref)}
               onPlaceChanged={() => handlePlaceChanged('to')}
@@ -104,6 +145,7 @@ export default function Details() {
                 value={formData.to}
                 onChange={handleChange}
                 placeholder="Enter To Location"
+                required
               />
             </Autocomplete>
           </div>
@@ -121,7 +163,16 @@ export default function Details() {
               required
             />
           </div>
-
+          <div className="mb-3">
+            <label>Date:</label>
+            <input
+              className="form-control"
+              type="Date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+            />
+          </div>
           <div className="mb-3">
             <label>Time:</label>
             <input
@@ -133,24 +184,15 @@ export default function Details() {
             />
           </div>
 
-          <div className="mb-3">
-            <label>Select Active Marker:</label>
-            <select
-              className="form-control"
-              value={activeMarker}
-              onChange={(e) => setActiveMarker(e.target.value)}
-            >
-              <option value="from">From</option>
-              <option value="to">To</option>
-            </select>
-          </div>
 
           <button type="submit" className="btn btn-primary shadow w-100">
             Submit
           </button>
         </form>
-      
+        </div>
+        <div className="map-container">
         <GoogleMap
+
           mapContainerStyle={mapContainerStyle}
           center={center}
           zoom={5}
@@ -158,6 +200,9 @@ export default function Details() {
         >
           {formData.fromCoords.lat && <Marker position={formData.fromCoords} label="From" />}
           {formData.toCoords.lat && <Marker position={formData.toCoords} label="To" />}
+          {directionsResponse && (
+            <DirectionsRenderer directions={directionsResponse} />
+          )}
         </GoogleMap>
       </div>
     </div>

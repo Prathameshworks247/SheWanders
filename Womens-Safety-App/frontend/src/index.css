@@ -2,14 +2,16 @@
   background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
   border-radius: 19px;
   justify-content: center;
+  flex-direction: row;
   display: flex;
   flex-wrap: wrap;
   width: 50%; /* Use percentage for responsiveness */
-  max-width: 1000px; /* Limit max width for large screens */
+  max-width: 900px; /* Limit max width for large screens */
   align-items: center;
   padding: 40px 10px; /* Consistent padding */
   font-family: sans-serif;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  gap: 50px
 }
 
 .form {
@@ -28,7 +30,6 @@
   background-image: url('./assets/back.png');
   width: 100vw; /* Make it responsive to the viewport width */
   height: 100vh; /* Make it responsive to the viewport height */
-  padding-bottom: 200px;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -91,4 +92,16 @@ img {
     width: 150px; 
     height: 150px;
   }
+}
+.profile-image {
+  flex: 0 0 150px; /* Fix width of the image */
+}
+
+.form-container {
+  flex: 1; /* Allow form to take the remaining space */
+}
+
+.map-container {
+  flex: 1; /* Allow map to take the remaining space */
+  width: 150%
 }
