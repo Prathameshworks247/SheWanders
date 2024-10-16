@@ -5,13 +5,15 @@
   flex-direction: row;
   display: flex;
   flex-wrap: wrap;
-  width: 50%; /* Use percentage for responsiveness */
-  max-width: 900px; /* Limit max width for large screens */
+  width: 100%; /* Use percentage for responsiveness */
+  max-width: 1200px; /* Limit max width for large screens */
   align-items: center;
   padding: 40px 10px; /* Consistent padding */
   font-family: sans-serif;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
-  gap: 50px
+  gap: 50px;
+  opacity: 0.85;
+  
 }
 
 .form {
@@ -33,16 +35,15 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  padding-left: 70px;
+  padding-right: 20px;
+
 }
 
-h1 {
-  font-weight: bolder;
-  font-family: monospace;
-}
 
 img {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
 }
 
 .btn {
@@ -99,9 +100,11 @@ img {
 
 .form-container {
   flex: 1; /* Allow form to take the remaining space */
+
 }
 
 .map-container {
   flex: 1; /* Allow map to take the remaining space */
+  opacity: 1;
   width: 150%
 }
