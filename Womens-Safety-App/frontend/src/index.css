@@ -5,9 +5,9 @@
   display: flex;
   flex-wrap: wrap;
   width: 50%; /* Use percentage for responsiveness */
-  max-width: 600px; /* Limit max width for large screens */
+  max-width: 1000px; /* Limit max width for large screens */
   align-items: center;
-  padding: 40px 20px; /* Consistent padding */
+  padding: 40px 10px; /* Consistent padding */
   font-family: sans-serif;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
 }

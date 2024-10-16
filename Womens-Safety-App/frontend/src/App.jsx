@@ -2,15 +2,14 @@ import { useState } from 'react'
 import React from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './components/Login';
+import Details from './components/Details';
 import Title from './components/Title';
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <Title/>
-      <Login/>
+      <Details/>
     </>
   )
 }
