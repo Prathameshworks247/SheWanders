@@ -1,5 +1,5 @@
 import React from "react";
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import womenpic from '../assets/protection.png'
 export default function Login() {
     return(
