@@ -21,6 +21,7 @@ export default function Details() {
     to: '',
     phone: '',
     time: '',
+    date:'',
     fromCoords: { lat: null, lng: null },
     toCoords: { lat: null, lng: null },
   });
