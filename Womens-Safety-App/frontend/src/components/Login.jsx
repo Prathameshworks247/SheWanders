@@ -24,8 +24,8 @@ export default function Login(){
     <div className="profile-image text-center ">
         <img src={womenpic} alt="profile" className="img-fluid" style={{ width: '250px' }} />
       </div>
-    <div className="form-container col-12 col-md-6 mx-auto mt-4">
-    <div className="mb-4 w-100 fs-2 fw-bolder font-san-serif">Log In</div>      
+    <div className="form-container-login  col-md-7">
+    <div className="mb-4 fs-2 fw-bolder font-san-serif">Log In</div>      
       <form onSubmit={handleSubmit} className='login-form'>
        <input className="form-control" type="email" name="email" placeholder="Email" onChange={handleChange} required/>
         <input className="form-control" type="password" name="password" placeholder="Password" onChange={handleChange} required/>
