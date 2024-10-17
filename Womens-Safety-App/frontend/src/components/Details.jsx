@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import womenpic from '../assets/protection.png';
+import { useState, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Autocomplete, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const mapContainerStyle = { width: '100%', height: '400px' };
+import womenpic from '../assets/protection.png';
+
+const mapContainerStyle = { width: '100%', height: '450px' };
 const center = { lat: 20.5937, lng: 78.9629 }; // India’s coordinates
 
 export default function Details() {
