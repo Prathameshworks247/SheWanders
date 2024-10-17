@@ -13,7 +13,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
   gap: 50px;
   opacity: 0.85;
-  
 }
 
 .form {
@@ -94,6 +93,8 @@ img {
     height: 150px;
   }
 }
+
+
 .profile-image {
   flex: 0 0 150px; /* Fix width of the image */
 }
