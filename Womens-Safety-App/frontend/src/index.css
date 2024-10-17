@@ -12,7 +12,7 @@
   font-family: sans-serif;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
   gap: 50px;
-  opacity: 0.85;
+  opacity: 1;
 }
 .login-card {
   background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
