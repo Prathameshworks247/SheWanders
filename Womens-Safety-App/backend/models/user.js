@@ -1,30 +1,7 @@
 import { Schema, model } from 'mongoose';
 
-const coordinateSchemaNumber = new mongoose.Schema({
-    lat: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(v) {
-            return /^-?\d+\.?\d{0,8}$/.test(v.toString());
-            },
-            message: props => `${props.value} is not a valid coordinate! Must have 8 or fewer decimal places.`
-        }
-    },
-    lng: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(v) {
-            return /^-?\d+\.?\d{0,8}$/.test(v.toString());
-            },
-            message: props => `${props.value} is not a valid coordinate! Must have 8 or fewer decimal places.`
-        }
-    }
-});
-
 const userSchema=new Schema({
-    name:{
+    username:{
         type:String,
         required:true
     },
@@ -32,21 +9,13 @@ const userSchema=new Schema({
         type:String,
         required:true
     },
-    date:{
+    email:{
         type:String,
         required:true
     },
-    time:{
+    password:{
         type:String,
         required:true
-    },
-    fromCoords:{
-        type: coordinateSchemaNumber,
-        required: true
-    },
-    toCoords:{
-        type: coordinateSchemaNumber,
-        required: true
     }
 });
 

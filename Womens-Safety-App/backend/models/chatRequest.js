@@ -6,7 +6,7 @@ const chatRequestSchema=new Schema({
         required:true
     },
     receiver:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         required:true
     },
     status:{
