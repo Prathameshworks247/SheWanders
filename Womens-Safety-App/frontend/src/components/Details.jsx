@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Autocomplete, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import womenpic from '../assets/protection.png';
+import womenpic from '../assets/trav.png';
 
 const mapContainerStyle = { width: '100%', height: '450px' };
 const center = { lat: 20.5937, lng: 78.9629 }; // India’s coordinates
@@ -92,9 +92,9 @@ export default function Details() {
   }
 
   return isLoaded ? (
-    <div className="login-card mb-3 mt-3 text-dark shadow p-4">
-      <div className="profile-image text-center ">
-        <img src={womenpic} alt="profile" className="img-fluid" style={{ width: '150px' }} />
+    <div className="detail-card mb-3 mt-3 text-dark shadow p-4">
+      <div className="profile-image  ">
+        <img src={womenpic} style={{ width: '250px' }} />
       </div>
 
       <div className="form-container col-12 col-md-6 mx-auto mt-4">

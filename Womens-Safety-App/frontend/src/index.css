@@ -1,4 +1,4 @@
-.login-card {
+.detail-card {
   background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
   border-radius: 19px;
   justify-content: center;
@@ -14,7 +14,35 @@
   gap: 50px;
   opacity: 0.85;
 }
-
+.login-card {
+  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+  border-radius: 19px;
+  justify-content: space-evenly;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%; /* Use percentage for responsiveness */
+  max-width: 500px; /* Limit max width for large screens */
+  align-items: center;
+  font-family: sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  opacity: 0.85;
+}
+.signup-card{ 
+  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+  border-radius: 19px;
+  justify-content: center;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  max-width: 900px; /* Limit max width for large screens */
+  font-family: sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  gap: 50px;
+  opacity: 0.85;
+}
 .form {
   justify-content: center;
   gap: 20px;
@@ -22,7 +50,22 @@
   flex-direction: column;
   width: 100%; /* Make form take full width of the card */
 }
-
+.signup-form {
+  justify-content: center;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%; /* Make form take full width of the card */
+}
+.login-form {
+  justify-content: center;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%; /* Make form take full width of the card */
+}
 #root {
   display: flex;
   justify-content: center;
@@ -70,10 +113,22 @@ img {
   .login-card {
     width: 70%; 
   }
+  .signup-card {
+    width: 70%; 
+  }
+  .detail-card {
+    width: 70%; 
+  }
 }
 
 @media (max-width: 768px) {
   .login-card {
+    width: 85%; 
+  }
+  .signup-card {
+    width: 85%; 
+  }
+  .detail-card {
     width: 85%; 
   }
 }
@@ -92,12 +147,26 @@ img {
     width: 150px; 
     height: 150px;
   }
+  .signup-card {
+    width: 95%; 
+  }
+  .detail-card {
+    width: 95%; 
+  }
 }
 
 
 .profile-image {
-  flex: 0 0 150px; /* Fix width of the image */
+
+  justify-content: center;
+  align-items: center;
 }
+.profile-image img{
+  width: 200%;
+  height: 100%;
+}
+
+
 
 .form-container {
   flex: 1; /* Allow form to take the remaining space */
