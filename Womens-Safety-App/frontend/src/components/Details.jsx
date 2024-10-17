@@ -16,18 +16,16 @@ export default function Details() {
   const toRef = useRef(null);
 
   const [formData, setFormData] = useState({
-    name:"",
     from: '',
     to: '',
-    phone: '',
     time: '',
     date:'',
     fromCoords: { lat: null, lng: null },
     toCoords: { lat: null, lng: null },
   });
 
-  const [activeMarker, setActiveMarker] = useState('from'); // Tracks which marker to set (From/To)
-  const [directionsResponse, setDirectionsResponse] = useState(null); // For holding directions response
+  const [activeMarker, setActiveMarker] = useState('from'); 
+  const [directionsResponse, setDirectionsResponse] = useState(null); 
 
   const handlePlaceChanged = (field) => {
     const autocomplete = field === 'from' ? fromRef.current : toRef.current;
@@ -41,7 +39,6 @@ export default function Details() {
         [`${field}Coords`]: { lat: location.lat(), lng: location.lng() },
       }));
 
-      // Fetch directions if both locations are set
       if (field === 'to' && formData.fromCoords.lat) {
         fetchDirections(formData.fromCoords, { lat: location.lat(), lng: location.lng() });
       }
@@ -56,7 +53,7 @@ export default function Details() {
         {
           origin,
           destination,
-          travelMode: window.google.maps.TravelMode.DRIVING, // Change travel mode if needed
+          travelMode: window.google.maps.TravelMode.DRIVING,
         },
         (response, status) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
@@ -100,21 +97,8 @@ export default function Details() {
       </div>
 
       <div className="form-container col-12 col-md-6 mx-auto mt-4">
-        <div className="mb-4 w-100 fs-2 fw-bolder font-monospace">Enter Details</div>
-
+        <div className="mb-4 w-100 fs-2 fw-bolder font-san-serif">Enter Traveling Details</div>
         <form className="form" onSubmit={handleSubmit}>
-            <div className="mb-3">
-            <label>User Name</label>
-              <input
-                className="form-control"
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter Username"
-                required
-              />
-          </div>
           <div className="mb-3">
             <label>Starting Point:</label>
             <Autocomplete
@@ -151,19 +135,6 @@ export default function Details() {
             </Autocomplete>
           </div>
 
-          <div className="mb-3">
-            <label>Phone:</label>
-            <input
-              className="form-control"
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              pattern="[0-9]{10}"
-              placeholder="Enter 10-digit Phone Number"
-              required
-            />
-          </div>
           <div className="mb-3">
             <label>Date:</label>
             <input
