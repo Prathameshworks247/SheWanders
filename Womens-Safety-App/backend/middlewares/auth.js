@@ -15,14 +15,9 @@ export const authMiddleware=async (req,res,next)=>{
 
         const isAuth=jwt.verify(token,JWT_SECRET);
 
-        if(!isAuth.success){
-            return res.status(401).json({
-                msg:'Not authorized'
-            });
-        }
-
         next();
     } catch(err){
+        console.log(err);
         return res.status(500).json({
             msg:'Something went wrong!'
         });

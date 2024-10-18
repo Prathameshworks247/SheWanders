@@ -41,7 +41,7 @@ router.post('/login',async (req,res,next)=>{
 
         if(!user || user.password!==req.body.password){
             return res.status(404).json({
-                msg:'USer credentials are wrong!'
+                msg:'User credentials are wrong!'
             });
         }
 
@@ -59,9 +59,22 @@ router.post('/login',async (req,res,next)=>{
     }
 })
 
-router.post('/add-details',async (req,res,next)=>{
+router.post('/travel-details',authMiddleware,async (req,res,next)=>{
     try{
-        const newTravelDetails=new TravelDetails(req.body);
+        console.log(req.body);
+
+        const newTravelDetails=new TravelDetails({
+            time:req.body.time,
+            date:req.body.date,
+            fromCoords:{
+                lat:req.body.fromCoords.lat,
+                lng:req.body.fromCoords.lng
+            },
+            toCoords:{
+                lat:req.body.toCoords.lat,
+                lng:req.body.toCoords.lng
+            }
+        });
 
         await newTravelDetails.save();
 
@@ -69,13 +82,14 @@ router.post('/add-details',async (req,res,next)=>{
             msg:'Added details to DB!',
         });
     } catch(err){
+        console.log(err);
         return res.status(500).json({
             msg:'Some problem occured. Pls try again later.'
         });
     }
 });
 
-router.get('/get-users',async (req,res,next)=>{
+router.get('/users',async (req,res,next)=>{
     const userId=req.query.userId;
     try{
         const userTravelDetails=await TravelDetails.find({userId:userId});
@@ -93,6 +107,24 @@ router.get('/get-users',async (req,res,next)=>{
 
         return res.status(200).json({
             users:users
+        });
+    } catch(err){
+        return res.status(500).json({
+            msg:'Some problem occured. Pls try again later.'
+        });
+    }
+});
+
+router.get('/pending-requests',async (req,res,next)=>{
+    const userId=req.userId;
+    try{
+        const pendingUserRequests=await ChatRequest.find({
+            receiver:userId,
+            status:'not accepted'
+        });
+
+        return res.status(200).json({
+            pendingRequests:pendingUserRequests
         });
     } catch(err){
         return res.status(500).json({

@@ -1,5 +1,8 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Autocomplete, Marker, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
+import axios from 'axios';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import womenpic from '../assets/trav.png';
@@ -15,6 +18,8 @@ export default function Details() {
 
   const fromRef = useRef(null);
   const toRef = useRef(null);
+
+  const navigate=useNavigate();
 
   const [formData, setFormData] = useState({
     from: '',
@@ -81,10 +86,25 @@ export default function Details() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     console.log('Form Data Submitted:', formData);
-    // Send formData to backend here
+    
+    const res=await axios.post('http://localhost:3000/api/travel-details',{
+      time:formData.time,
+      date:formData.date,
+      toCoords:formData.toCoords,
+      fromCoords:formData.fromCoords
+    },{
+      headers:{
+        'Authorization':localStorage.getItem('userAuthToken'),
+        'Content-Type':'application/json'
+      }
+    });
+
+    if(res.status===200){
+      navigate('/')
+    }
   };
 
   if (loadError) {

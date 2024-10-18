@@ -34,37 +34,42 @@ const sort={
 
 function App() {
   const [client,setClient]=useState(null);
+  const [channel,setChannel]=useState(null);
 
   useEffect(()=>{
     async function init(){
       const chatClient=StreamChat.getInstance(apiKey);
 
-      await chatClient.connectUser(user,chatClient.devToken(user.id));
+      if(!chatClient.userID){
+        await chatClient.connectUser(user,chatClient.devToken(user.id));
+      }
 
       const channel=chatClient.channel('messaging','react-talk',{
         members:[user.id],
         name:'Talk with react'
       });
       await channel.watch();
+
+      setChannel(channel);
       setClient(chatClient);
     }
 
     init();
 
     if(client){
-      return ()=>{
-        client.diconnectUser();
+      return async ()=>{
+        await client.disconnectUser();
       }
     }
-  },[]);
+  },[client]);
 
-  if(!client){
+  if(!client || !channel){
     return <LoadingIndicator/>
   }
 
   return <Chat client={client} theme="messaging light">
-    <ChannelList filters={filters} sort={sort}/>
-    <Channel>
+    {/* <ChannelList filters={filters} sort={sort}/> */}
+    <Channel channel={channel}>
       <Window>
         <ChannelHeader/>
         <MessageList/>

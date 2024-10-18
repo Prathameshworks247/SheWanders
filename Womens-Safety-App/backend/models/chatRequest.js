@@ -2,11 +2,13 @@ import mongoose, { Schema, model } from "mongoose";
 
 const chatRequestSchema=new Schema({
     sender:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required:true
     },
     receiver:{
         type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required:true
     },
     status:{
