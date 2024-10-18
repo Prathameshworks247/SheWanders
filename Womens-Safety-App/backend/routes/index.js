@@ -59,7 +59,7 @@ router.post('/login',async (req,res,next)=>{
     }
 })
 
-router.post('/add-details',async (req,res,next)=>{
+router.post('/add-details',authMiddleware,async (req,res,next)=>{
     try{
         const newTravelDetails=new TravelDetails(req.body);
 
