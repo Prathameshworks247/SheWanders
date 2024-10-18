@@ -20,7 +20,7 @@ export default function Login(){
     const {email, password } = formData;
     console.log('User logged in:', formData);
 
-    const res=await axios.post('http://localhost:3000/api/login',{
+    const res=await axios.post('http://10.0.14.8:3000/api/login',{
       email:email,
       password:password
     });
@@ -45,6 +45,9 @@ export default function Login(){
             <button type="submit" className="btn btn-primary shadow w-100">
               Log In
             </button>
+            <p>Not Registered? <a href="" onClick={()=>{
+              navigate('/')
+            }}>Sign Up</a></p>
           </form>
         <div/>
       </div>

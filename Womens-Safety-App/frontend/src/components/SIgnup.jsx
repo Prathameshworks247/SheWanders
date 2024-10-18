@@ -20,7 +20,7 @@ export default function Signup(){
     const { username, email, password, phone } = formData;
     console.log('User signed up:', formData);
 
-    const res=await axios.post('http://localhost:3000/api/signup',{
+    const res=await axios.post('http://10.0.14.8:3000/api/signup',{
       username:username,
       email:email,
       phone:phone,
@@ -32,7 +32,7 @@ export default function Signup(){
     }
 
   };
-
+  
   return (
     <div className="signup-card mb-3 mt-3 text-dark shadow p-4">
       <div className="profile-image text-center ">
@@ -48,6 +48,9 @@ export default function Signup(){
             <button type="submit" className="btn btn-primary shadow w-100">
                 Sign-up
             </button>
+            <p>Already Registered? <a href="" onClick={()=>{
+              navigate('/login')
+            }}>Log In</a></p>
           </form>
         <div/>
       </div>
