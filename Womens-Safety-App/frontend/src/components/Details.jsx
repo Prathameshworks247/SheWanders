@@ -91,10 +91,16 @@ export default function Details() {
     console.log('Form Data Submitted:', formData);
     
     const res=await axios.post('http://localhost:3000/api/travel-details',{
-      time:formData.time,
-      date:formData.date,
-      toCoords:formData.toCoords,
-      fromCoords:formData.fromCoords
+      time:formData.time.toString(),
+      date:formData.date.toString(),
+      toCoords:{
+        lat:formData.toCoords.lat.toString(),
+        lng:formData.toCoords.lng.toString()
+      },
+      fromCoords:{
+        lat:formData.fromCoords.lat.toString(),
+        lng:formData.fromCoords.lng.toString()
+      }
     },{
       headers:{
         'Authorization':localStorage.getItem('userAuthToken'),
@@ -103,7 +109,7 @@ export default function Details() {
     });
 
     if(res.status===200){
-      navigate('/')
+      navigate('/request');
     }
   };
 

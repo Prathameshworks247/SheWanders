@@ -1,27 +1,27 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-const coordinateSchemaNumber=new mongoose.Schema({
-    lat: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(v) {
-            return /^-?\d+\.?\d{0,8}$/.test(v.toString());
-            },
-            message: props => `${props.value} is not a valid coordinate! Must have 8 or fewer decimal places.`
-        }
-    },
-    lng: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(v) {
-            return /^-?\d+\.?\d{0,8}$/.test(v.toString());
-            },
-            message: props => `${props.value} is not a valid coordinate! Must have 8 or fewer decimal places.`
-        }
-    }
-});
+// const coordinateSchemaNumber=new mongoose.Schema({
+//     lat: {
+//         type: Number,
+//         required: true,
+//         validate: {
+//             validator: function(v) {
+//             return /^-?\d+\.?\d{0,8}$/.test(v.toString());
+//             },
+//             message: props => `${props.value} is not a valid coordinate! Must have 8 or fewer decimal places.`
+//         }
+//     },
+//     lng: {
+//         type: Number,
+//         required: true,
+//         validate: {
+//             validator: function(v) {
+//             return /^-?\d+\.?\d{0,8}$/.test(v.toString());
+//             },
+//             message: props => `${props.value} is not a valid coordinate! Must have 8 or fewer decimal places.`
+//         }
+//     }
+// });
 
 const travelDetailsSchema=new Schema({
     userId:{
@@ -38,12 +38,24 @@ const travelDetailsSchema=new Schema({
         required:true
     },
     fromCoords:{
-        type: coordinateSchemaNumber,
-        required: true
+        lat:{
+            type:String,
+            required:true
+        },
+        lng:{
+            type:String,
+            required:true
+        }
     },
     toCoords:{
-        type: coordinateSchemaNumber,
-        required: true
+        lat:{
+            type:String,
+            required:true
+        },
+        lng:{
+            type:String,
+            required:true
+        }
     }
 });
 

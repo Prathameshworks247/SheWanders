@@ -61,9 +61,8 @@ router.post('/login',async (req,res,next)=>{
 
 router.post('/travel-details',authMiddleware,async (req,res,next)=>{
     try{
-        console.log(req.body);
-
         const newTravelDetails=new TravelDetails({
+            userId:req.userId,
             time:req.body.time,
             date:req.body.date,
             fromCoords:{
@@ -101,7 +100,7 @@ router.get('/users',async (req,res,next)=>{
             'toCoords.lng': userTravelDetails.toCoords.lng,
             'fromCoords.lat': userTravelDetails.fromCoords.lat,
             'fromCoords.lng': userTravelDetails.fromCoords.lng
-        }).populate('userId','name email');
+        }).populate('userId','name email _id');
 
         users=users.filter(user=>user.userId._id!==userId);
 

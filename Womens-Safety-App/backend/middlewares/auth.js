@@ -15,6 +15,8 @@ export const authMiddleware=async (req,res,next)=>{
 
         const isAuth=jwt.verify(token,JWT_SECRET);
 
+        req.userId=isAuth.userId;
+
         next();
     } catch(err){
         console.log(err);
