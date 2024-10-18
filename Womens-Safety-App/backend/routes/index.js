@@ -12,7 +12,7 @@ import { JWT_SECRET } from '../config.js';
 const router=Router();
 
 router.post('/signup',async (req,res,next)=>{
-    try{    
+    try{
         const user=await User.findOne({email:req.body.email});
 
         if(user){
