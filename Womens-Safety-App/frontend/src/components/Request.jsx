@@ -16,13 +16,13 @@ export default function Request() {
     const users = {
       availableUsers: [
         { id: 1, name: "Alice",From: "Dharwad", To: "Kolhapur"},
-        { id: 2, name: "Bob",From: "Dharwad", To: "Thane" }
       ],
       sentRequests: [
         { id: 3, name: "Charlie", email: "charlie@example.com", status: "pending" }
       ],
       incomingRequests: [
-        { id: 4, name: "David",From: "Dharwad", To: "Thane" }
+        { id: 4, name: "David",From: "Dharwad", To: "Thane" },
+        
       ]
     };
 
@@ -47,7 +47,7 @@ export default function Request() {
 
   return (
     
-    <div>
+    <div className='req-page'>
     <div className="req-card mb-3 mt-3 text-dark shadow p-4">
       <h2>Available Users</h2>
       <div className="user-list">

@@ -43,6 +43,13 @@
   gap: 50px;
   opacity: 0.85;
 }
+.req-page{
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  justify-content: space-between;
+  gap: 400px;
+}
 .req-card {
   background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
   border-radius: 19px;
