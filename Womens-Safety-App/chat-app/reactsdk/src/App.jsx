@@ -45,9 +45,7 @@ function App() {
         members:[user.id],
         name:'Talk with react'
       });
-
       await channel.watch();
-
       setClient(chatClient);
     }
 

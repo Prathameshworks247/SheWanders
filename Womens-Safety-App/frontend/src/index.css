@@ -43,6 +43,22 @@
   gap: 50px;
   opacity: 0.85;
 }
+.req-card {
+  background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+  border-radius: 19px;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%; /* Use percentage for responsiveness */
+  max-width: 1200px; /* Limit max width for large screens */
+  align-items: center;
+  padding: 40px 10px; /* Consistent padding */
+  font-family: sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  gap: 50px;
+  opacity: 1;
+}
 .form-container-login{
   display: flex;
   justify-content: center;
@@ -183,4 +199,33 @@ img {
   flex: 1; /* Allow map to take the remaining space */
   opacity: 1;
   width: 150%
+}
+.user-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  width: 200px;
+  text-align: center;
+}
+
+button {
+  margin: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
