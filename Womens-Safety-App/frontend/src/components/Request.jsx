@@ -1,84 +1,135 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import UserCard from './UserCard';
 
-export default function Request() {
+export default function Request({handleCreateChat,handleSetCurrentUser}) {
   const [availableUsers, setAvailableUsers] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
   const [incomingRequests, setIncomingRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [acceptance, setAcceptance] = useState("Accept");
+
   const navigate = useNavigate();
 
-  // Simulate fetching users on component mount
   useEffect(() => {
-    const users = {
-      availableUsers: [
-        { id: 1, name: "Alice",From: "Dharwad", To: "Kolhapur"},
-      ],
-      sentRequests: [
-        { id: 3, name: "Charlie", email: "charlie@example.com", status: "pending" }
-      ],
-      incomingRequests: [
-        { id: 4, name: "David",From: "Dharwad", To: "Thane" },
+    // const users = {
+    //   availableUsers: [
+    //     { id: 1, name: "Alice",From: "Dharwad", To: "Kolhapur"},
+    //   ],
+    //   sentRequests: [
+    //     { id: 3, name: "Charlie", email: "charlie@example.com", status: "pending" }
+    //   ],
+    //   incomingRequests: [
+    //     { id: 4, name: "David",From: "Dharwad", To: "Thane" },
         
-      ]
-    };
+    //   ]
+    // };
 
-    // Update state with user data
-    setAvailableUsers(users.availableUsers);
-    setSentRequests(users.sentRequests);
-    setIncomingRequests(users.incomingRequests);
+    async function getUsers(){
+      const res1=await axios.get('http://localhost:3000/api/users',{
+        headers:{
+          'Authorization':localStorage.getItem('userAuthToken')
+        }
+      });
+
+      const res2=await axios.get('http://localhost:3000/api/pending-requests',{
+        headers:{
+          'Authorization':localStorage.getItem('userAuthToken')
+        }
+      });
+
+      setAvailableUsers(res1.data.users);
+      setIncomingRequests(res2.data.pendingRequests);
+    }
+
+    getUsers();
+
+    // setSentRequests(users.sentRequests);
+    // setIncomingRequests(users.incomingRequests);
     setLoading(false);
-  }, []); // Empty dependency array ensures it runs only once on mount
+  }, []);
 
-  const sendRequest = (userId) => {
+  const sendRequest =async (userId) => {
     console.log(`Request sent to user ${userId}`);
-    navigate('/chatbox')
+
+    const res=await axios.post('http://localhost:3000/api/send-chat-request',{
+      receiverId:userId
+    },{
+      headers:{
+        'Authorization':localStorage.getItem('userAuthToken')
+      }
+    });
+
+    if(res.status===200){
+      handleCreateChat(prevDetails=>{
+        return res.data.chatDetails
+      });
+      handleSetCurrentUser(prevUser=>{
+        return res.data.chatDetails.sender._id
+      });
+
+      navigate('/chatbox');
+    }
   };
 
-  const acceptRequest = (userId) => {
+  const acceptRequest =async (userId) => {
     console.log(`Request accepted from user ${userId}`);
-    navigate('/chatbox');
+
+    const res=await axios.post('http://localhost:3000/api/update-chat-status',{
+      senderId:userId
+    },{
+      headers:{
+        'Authorization':localStorage.getItem('userAuthToken')
+      }
+    });
+
+    if(res.status===200){
+      handleCreateChat(res.data.chatDetails);
+      handleSetCurrentUser(res.data.chatDetails.receiver._id);
+
+      navigate('/chatbox');
+    }
   };
 
   if (loading) return <p>Loading users...</p>;
 
   return (
-    
     <div className='req-page'>
-    <div className="req-card mb-3 mt-3 text-dark shadow p-4">
-      <h2>Available Users</h2>
-      <div className="user-list">
-        {availableUsers.map((user) => (
-          <UserCard
-            key={user.id}
-            user={user}
-            actionLabel="Send Chat Request"
-            onAction={() => sendRequest(user.id)}
-          />
-        ))}
-      </div>
+      <div className="req-card mb-3 mt-3 text-dark shadow p-4">
+        <h2>Available Users</h2>
+        <div className="user-list">
+          {availableUsers.map((user) => (
+            <UserCard
+              key={user.userId._id}
+              user={user.userId}
+              actionLabel="Send Chat Request"
+              onAction={() => sendRequest(user.userId._id)}
+            />
+          ))}
+        </div>
       </div>
       
       <div className="req-card mb-3 mt-3 text-dark shadow p-4">
-      <h2>Incoming Requests</h2>
-      <div className="user-list">
-        {incomingRequests.length > 0 ? (
-          incomingRequests.map((user) => (
-            <UserCard
-              key={user.id}
-              user={user}
-              actionLabel={acceptance}
-              onAction={() => acceptRequest(user.id)}
-            />
-          ))
-        ) : (
-          <p>No incoming requests.</p>
-        )}
+        <h2>Incoming Requests</h2>
+        <div className="user-list">
+          {incomingRequests.length > 0 ? (
+            incomingRequests.map((request) => (
+              <UserCard
+                key={request.sender._id}
+                user={request.sender}
+                actionLabel={acceptance}
+                onAction={() => acceptRequest(request.sender._id)}
+              />
+            ))
+          ) : (
+            <p>No incoming requests.</p>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

@@ -88,10 +88,10 @@ router.post('/travel-details',authMiddleware,async (req,res,next)=>{
     }
 });
 
-router.get('/users',async (req,res,next)=>{
-    const userId=req.query.userId;
+router.get('/users',authMiddleware,async (req,res,next)=>{
+    const userId=req.userId;
     try{
-        const userTravelDetails=await TravelDetails.find({userId:userId});
+        const userTravelDetails=await TravelDetails.findOne({userId:userId});
 
         const users=await TravelDetails.find({
             time:userTravelDetails.time,
@@ -100,27 +100,28 @@ router.get('/users',async (req,res,next)=>{
             'toCoords.lng': userTravelDetails.toCoords.lng,
             'fromCoords.lat': userTravelDetails.fromCoords.lat,
             'fromCoords.lng': userTravelDetails.fromCoords.lng
-        }).populate('userId','name email _id');
+        }).populate('userId','username email _id');
 
-        users=users.filter(user=>user.userId._id!==userId);
+        const filteredUsers=users.filter(user=>user.userId._id!=userId);
 
         return res.status(200).json({
-            users:users
+            users:filteredUsers
         });
     } catch(err){
+        console.log(err);
         return res.status(500).json({
             msg:'Some problem occured. Pls try again later.'
         });
     }
 });
 
-router.get('/pending-requests',async (req,res,next)=>{
+router.get('/pending-requests',authMiddleware,async (req,res,next)=>{
     const userId=req.userId;
     try{
         const pendingUserRequests=await ChatRequest.find({
             receiver:userId,
             status:'not accepted'
-        });
+        }).populate('sender','_id username email');
 
         return res.status(200).json({
             pendingRequests:pendingUserRequests
@@ -132,8 +133,8 @@ router.get('/pending-requests',async (req,res,next)=>{
     }
 });
 
-router.post('/send-chat-request',async (req,res,next)=>{
-    const senderId=req.body.senderId;
+router.post('/send-chat-request',authMiddleware,async (req,res,next)=>{
+    const senderId=req.userId;
     const receiverId=req.body.receiverId;
     try{
         const newChatRequest=new ChatRequest({
@@ -142,22 +143,41 @@ router.post('/send-chat-request',async (req,res,next)=>{
             status:'not accepted'
         });
 
-        await newChatRequest.save();
+        const DBchatRequest=await newChatRequest.save();
+
+        const DBpopulatedChatRequest=await DBchatRequest.populate('sender receiver','name _id email');
 
         return res.status(200).json({
-            msg:'Request successfully sent!'
+            msg:'Request successfully sent!',
+            chatDetails:DBpopulatedChatRequest
         });
     } catch(err){
+        console.log(err);
         return res.status(500).json({
             msg:'Some problem occured. Pls try again later.'
         });
     }
 });
 
-router.post('/update-chat-status',(req,res,next)=>{
-    const updatedStatus=req.body.updatedStatus;
+router.post('/update-chat-status',authMiddleware,async (req,res,next)=>{
+    const senderId=req.body.senderId;
+    const receiverId=req.userId;
     try{
+        const chatRequest=await ChatRequest.findOne({
+            receiver:receiverId,
+            sender:senderId
+        });
 
+        chatRequest.status='accepted';
+
+        const DBchatRequest=await chatRequest.save();
+
+        const DBpopulatedChatRequest=await DBchatRequest.populate('sender receiver','_id username email');
+
+        return res.status(200).json({
+            msg:'Request successfully accepted!',
+            chatDetails:DBpopulatedChatRequest
+        });
     } catch(err){
         return res.status(500).json({
             msg:'Some problem occured. Pls try again later.'
