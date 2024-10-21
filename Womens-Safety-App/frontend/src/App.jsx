@@ -3,11 +3,11 @@ import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Login from './components/Login'
-import Details from './components/Details';
-import Signup from './components/Signup';
-import Request from './components/Request';
-import ChatBox from './components/ChatBox';
+import Login from './components/Login.jsx'
+import Details from './components/Details.jsx';
+import Signup from './components/Signup.jsx';
+import Request from './components/Request.jsx';
+import ChatBox from './components/ChatBox.jsx';
 
 function App() {
 
