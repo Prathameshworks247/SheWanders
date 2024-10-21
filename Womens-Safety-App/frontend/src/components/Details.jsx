@@ -90,7 +90,7 @@ export default function Details() {
     e.preventDefault();
     console.log('Form Data Submitted:', formData);
     
-    const res=await axios.post('http://localhost:3000/api/travel-details',{
+    const res=await axios.post('https://women-s-safety-app.onrender.com/api/signup/api/travel-details',{
       time:formData.time.toString(),
       date:formData.date.toString(),
       toCoords:{
