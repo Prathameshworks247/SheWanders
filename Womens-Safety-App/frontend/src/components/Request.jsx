@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import UserCard from './UserCard';
+import UserCard from './UserCard.jsx';
 
 export default function Request({handleCreateChat,handleSetCurrentUser}) {
   const [availableUsers, setAvailableUsers] = useState([]);
