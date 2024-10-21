@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 
+const PORT=process.env.PORT||3000;
+
 import mainRouter from './routes/index.js';
 
 import { MONGODB_URI } from './config.js';
@@ -15,6 +17,6 @@ app.use(express.json());
 
 app.use('/api',mainRouter);
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
     console.log('Listening on port 3000!');
 });
