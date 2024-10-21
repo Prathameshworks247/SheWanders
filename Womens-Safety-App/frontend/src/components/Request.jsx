@@ -30,13 +30,13 @@ export default function Request({handleCreateChat,handleSetCurrentUser}) {
     // };
 
     async function getUsers(){
-      const res1=await axios.get('https://women-s-safety-app.onrender.com/api/signup/api/users',{
+      const res1=await axios.get('https://women-s-safety-app.onrender.com/api/users',{
         headers:{
           'Authorization':localStorage.getItem('userAuthToken')
         }
       });
 
-      const res2=await axios.get('https://women-s-safety-app.onrender.com/api/signup/api/pending-requests',{
+      const res2=await axios.get('https://women-s-safety-app.onrender.com/api/pending-requests',{
         headers:{
           'Authorization':localStorage.getItem('userAuthToken')
         }
@@ -56,7 +56,7 @@ export default function Request({handleCreateChat,handleSetCurrentUser}) {
   const sendRequest =async (userId) => {
     console.log(`Request sent to user ${userId}`);
 
-    const res=await axios.post('https://women-s-safety-app.onrender.com/api/signup/api/send-chat-request',{
+    const res=await axios.post('https://women-s-safety-app.onrender.com/api/send-chat-request',{
       receiverId:userId
     },{
       headers:{
@@ -79,7 +79,7 @@ export default function Request({handleCreateChat,handleSetCurrentUser}) {
   const acceptRequest =async (userId) => {
     console.log(`Request accepted from user ${userId}`);
 
-    const res=await axios.post('https://women-s-safety-app.onrender.com/api/signup/api/update-chat-status',{
+    const res=await axios.post('https://women-s-safety-app.onrender.com/api/update-chat-status',{
       senderId:userId
     },{
       headers:{
