@@ -8,11 +8,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import womenpic from '../assets/trav.png';
 
 const mapContainerStyle = { width: '100%', height: '450px' };
-const center = { lat: 20.5937, lng: 78.9629 }; // India’s coordinates
+const center = { lat: 20.5937, lng: 78.9629 }; 
 
 export default function Details() {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyCl0C-lGa1dKfuPPypqbU87sCA2ATcPTPY', // Replace with a valid API key
+    googleMapsApiKey: 'AIzaSyCl0C-lGa1dKfuPPypqbU87sCA2ATcPTPY', 
     libraries: ['places'],
   });
 

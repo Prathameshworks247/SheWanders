@@ -20,7 +20,7 @@ export default function Signup(){
     const { username, email, password, phone } = formData;
     console.log('User signed up:', formData);
 
-    const res=await axios.post('http://10.0.14.8:3000/api/signup',{
+    const res=await axios.post('http://localhost:3000/api/signup',{
       username:username,
       email:email,
       phone:phone,
