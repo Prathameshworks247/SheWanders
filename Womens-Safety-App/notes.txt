@@ -2,3 +2,4 @@ Sign-up -
 Name
 Email 
 Password
+
