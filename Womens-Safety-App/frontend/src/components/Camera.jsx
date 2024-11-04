@@ -50,6 +50,7 @@ function Camera(){
   };
 
   const processImage = async (imageBlob) => {
+    stopCamera();
     setIsLoading(true);
     setError(null);
     

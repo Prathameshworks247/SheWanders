@@ -25,11 +25,11 @@ def verify():
 
     in_memory_file=io.BytesIO()
     image_file.save(in_memory_file)
-    data=np.frombuffer(in_memory_file.getvalue(), dtype=np.uint8)
+    data=np.frombuffer(in_memory_file.getvalue(),dtype=np.uint8)
 
-    img_array=cv2.imdecode(data, cv2.IMREAD_COLOR)
+    img_array=cv2.imdecode(data,cv2.IMREAD_COLOR)
 
-    analysis=DeepFace.analyze(img_path=img_array, actions=['gender'])
+    analysis=DeepFace.analyze(img_path=img_array,actions=['gender'])
     gender=analysis[0]['dominant_gender']
 
     if gender.lower()=='woman':
