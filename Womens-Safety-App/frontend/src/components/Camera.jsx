@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function Camera(){
   const [isLoading, setIsLoading] = useState(false);
@@ -59,10 +60,15 @@ function Camera(){
       const formData = new FormData();
       formData.append('image', imageBlob);
 
-      const recognitionResponse = await fetch('https://gender-verification.onrender.com/api/verify', {
-        method: 'POST',
-        body: formData
-      });
+      const recognitionResponse = await axios.post('https://gender-verification.onrender.com/api/verify',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      
 
       if(recognitionResponse.status!==200){
         navigate('/login');
