@@ -8,6 +8,7 @@ import Details from './components/Details.jsx';
 import Signup from './components/Signup.jsx';
 import Request from './components/Request.jsx';
 import ChatBox from './components/ChatBox.jsx';
+import Camera from './components/Camera.jsx';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
         chatDetails={chatDetails}
         currentUser={currentUser}
         />}/>
+        <Route path='/verification' element={<Camera />} />
       </Routes>
     </BrowserRouter>
   </>
