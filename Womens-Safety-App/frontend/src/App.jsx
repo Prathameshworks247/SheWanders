@@ -26,9 +26,9 @@ function App() {
   return <>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element = {<Signup/>}/>
-        <Route path='/login' element={<Login/>} />
-        <Route path='/details' element={<Details/>} />
+        <Route path='/' element = {<Signup />}/>
+        <Route path='/login' element={<Login />} />
+        <Route path='/details' element={<Details />} />
         <Route path='/request' element={<Request
         handleCreateChat={handleCreateChat}
         handleSetCurrentUser={handleSetCurrentUser}
