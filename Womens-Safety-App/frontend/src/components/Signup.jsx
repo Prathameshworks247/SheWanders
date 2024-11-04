@@ -46,7 +46,7 @@ export default function Signup(){
             <input className="form-control" type="email" name="email" placeholder="Email" onChange={handleChange} required/>
             <input className="form-control" type="password" name="password" placeholder="Password" onChange={handleChange} required/>
             <input className="form-control" type="phone" name="phone" placeholder="Phone Number" onChange={handleChange} required/>
-            <input className="form-control" type="emergency" name="emergency" placeholder="Emergency Contact Number" onChange={handleChange} required/>
+            <input className="form-control" type="emergency" name="emergency" placeholder="Emergency Phone Number" onChange={handleChange} required/>
             <button type="submit" className="btn btn-primary shadow w-100">
                 Sign-up
             </button>
