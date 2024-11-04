@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import womenpic from '../assets/protection.png';
 
 export default function Signup(){
-  const [formData, setFormData] = useState({ username: '', email: '', password: '', phone:''});
+  const [formData, setFormData] = useState({ username: '', email: '', password: '', phone:'', emergency:''});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,14 +17,15 @@ export default function Signup(){
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password, phone } = formData;
+    const { username, email, password, phone, emergency} = formData;
     console.log('User signed up:', formData);
 
     const res=await axios.post('https://women-s-safety-app.onrender.com/api/signup',{
       username:username,
       email:email,
       phone:phone,
-      password:password
+      password:password,
+      emergency:emergency
     });
 
     if(res.status===200){
@@ -45,6 +46,7 @@ export default function Signup(){
             <input className="form-control" type="email" name="email" placeholder="Email" onChange={handleChange} required/>
             <input className="form-control" type="password" name="password" placeholder="Password" onChange={handleChange} required/>
             <input className="form-control" type="phone" name="phone" placeholder="Phone Number" onChange={handleChange} required/>
+            <input className="form-control" type="emergency" name="emergency" placeholder="Emergency Contact Number" onChange={handleChange} required/>
             <button type="submit" className="btn btn-primary shadow w-100">
                 Sign-up
             </button>
