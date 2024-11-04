@@ -28,7 +28,7 @@ export default function Login(){
     if(res.status===200){
       localStorage.setItem('userAuthToken','Bearer '+res.data.token);
 
-      navigate('/details');
+      navigate('/verification');
     }
   };
 

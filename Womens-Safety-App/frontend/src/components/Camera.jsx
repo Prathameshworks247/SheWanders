@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Camera(){
   const [isLoading, setIsLoading] = useState(false);
@@ -7,6 +8,8 @@ function Camera(){
   const [stream, setStream] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const navigate=useNavigate();
 
   const startCamera = async () => {
     try {
@@ -55,32 +58,19 @@ function Camera(){
       const formData = new FormData();
       formData.append('image', imageBlob);
 
-      const recognitionResponse = await fetch('YOUR_EXTERNAL_API_ENDPOINT', {
+      const recognitionResponse = await fetch('http://127.0.0.1:3000/api/verify', {
         method: 'POST',
         body: formData
       });
 
-      if (!recognitionResponse.ok) throw new Error('Recognition API failed');
-      
-      const recognitionData = await recognitionResponse.json();
+      if(recognitionResponse.status!==200){
+        navigate('/login');
+      } else{
+        navigate('/details');
+      }
 
-      // Send the results to your backend
-      const backendResponse = await fetch('/api/gender-recognition', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(recognitionData)
-      });
-
-      if (!backendResponse.ok) throw new Error('Backend API failed');
-      
-      const finalResult = await backendResponse.json();
-      setResult(finalResult);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
+    } catch(err){
+      console.log(err);
     }
   };
 
