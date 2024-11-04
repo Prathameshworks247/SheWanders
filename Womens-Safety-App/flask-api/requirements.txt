@@ -3,3 +3,4 @@ Flask-Cors
 opencv-python
 deepface
 gunicorn
+tf-keras
