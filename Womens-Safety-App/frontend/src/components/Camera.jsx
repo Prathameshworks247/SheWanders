@@ -59,7 +59,7 @@ function Camera(){
       const formData = new FormData();
       formData.append('image', imageBlob);
 
-      const recognitionResponse = await fetch('http://127.0.0.1:3000/api/verify', {
+      const recognitionResponse = await fetch('https://gender-verification.onrender.com/api/verify', {
         method: 'POST',
         body: formData
       });
