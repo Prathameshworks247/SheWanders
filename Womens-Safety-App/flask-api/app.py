@@ -16,7 +16,6 @@ def hello_world():
     return 'Hello world!'
 
 @app.route('/api/verify',methods=['POST'])
-@cross_origin(origins="*")
 
 def verify():
     image_file=request.files['image']
