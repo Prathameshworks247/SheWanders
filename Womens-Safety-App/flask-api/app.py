@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS,cross_origin
 import os
 import cv2
 from deepface import DeepFace
@@ -6,6 +7,7 @@ import io
 import numpy as np
 
 app = Flask(__name__)
+CORS(app,supports_credentials=True)
 
 @app.before_request
 def before_request():
