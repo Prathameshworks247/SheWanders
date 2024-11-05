@@ -27,6 +27,10 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
     return response
 
+@app.route('/api/testing',methods=['GET','OPTIONS'])
+def hello():
+    return "hello world!"
+
 @app.route('/api/verify', methods=['POST', 'OPTIONS'])
 def verify():
     try:
