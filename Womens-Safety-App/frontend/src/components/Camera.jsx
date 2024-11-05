@@ -60,7 +60,7 @@ function Camera(){
       const formData = new FormData();
       formData.append('image', imageBlob);
 
-      const recognitionResponse = await axios.post('https://gender-verification.onrender.com/api/verify',
+      const recognitionResponse = await axios.post('http://18.205.234.207:3000/api/verify',
         formData,
         {
           headers: {
