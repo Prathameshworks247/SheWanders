@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask,request,jsonify
 from flask_cors import CORS,cross_origin
 import os
 import cv2
@@ -7,49 +7,32 @@ import io
 import numpy as np
 
 app = Flask(__name__)
-CORS(app,supports_credentials=True)
+CORS(app)
 
-@app.before_request
-def before_request():
-    if request.method == 'OPTIONS':
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Max-Age': '3600'
-        }
-        return ('', 204, headers)
+@app.route('/api/testing')
+def hello_world():
+    return 'Hello world!'
 
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-    response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-    return response
+@app.route('/api/verify',methods=['POST'])
+@cross_origin()
 
-@app.route('/api/testing',methods=['GET','OPTIONS'])
-def hello():
-    return "hello world!"
-
-@app.route('/api/verify', methods=['POST', 'OPTIONS'])
 def verify():
-    try:
-        image_file = request.files['image']
-        in_memory_file = io.BytesIO()
-        image_file.save(in_memory_file)
-        data = np.frombuffer(in_memory_file.getvalue(), dtype=np.uint8)
-        img_array = cv2.imdecode(data, cv2.IMREAD_COLOR)
+    image_file=request.files['image']
+    # save_path=os.path.join('./images', image_file.filename)
+    # image_file.save(save_path)
 
-        analysis = DeepFace.analyze(img_path=img_array, actions=['gender'])
-        gender = analysis[0]['dominant_gender']
+    in_memory_file=io.BytesIO()
+    image_file.save(in_memory_file)
 
-        return jsonify({
-            "message": "Gender verified as female" if gender.lower() == 'woman' else "Gender verified as male"
-        }), 200 if gender.lower() == 'woman' else 500
+    data=np.frombuffer(in_memory_file.getvalue(),dtype=np.uint8)
+    img_array=cv2.imdecode(data,cv2.IMREAD_COLOR)
+    analysis=DeepFace.analyze(img_path=img_array,actions=['gender'])
+    gender=analysis[0]['dominant_gender']
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    if gender.lower()=='woman':
+        return jsonify({"message": "Gender verified as female"}), 200
+    else:
+        return jsonify({"message": "Gender verified as male"}), 500
 
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 3000))
-    app.run(host='0.0.0.0', port=port)
+if __name__=="__main__":
+    app.run(host='0.0.0.0', port=3000, debug=True)
