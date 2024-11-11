@@ -30,7 +30,7 @@ def verify():
     if gender.lower() == 'woman':
         return jsonify({"message": "Gender verified as female"}), 200
     else:
-        return jsonify({"message": "Gender verified as male"}), 500
+        return jsonify({"message": "Gender verified as male"}), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3000, debug=True)
