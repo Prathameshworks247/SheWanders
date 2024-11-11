@@ -4,34 +4,33 @@ import { GoogleMap, useJsApiLoader, Autocomplete, Marker, DirectionsService, Dir
 import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import womenpic from '../assets/trav.png';
 
 const mapContainerStyle = { width: '100%', height: '450px' };
-const center = { lat: 20.5937, lng: 78.9629 }; 
+const center = { lat: 20.5937, lng: 78.9629 };
 
 export default function Details() {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyCl0C-lGa1dKfuPPypqbU87sCA2ATcPTPY', 
+    googleMapsApiKey: 'AIzaSyCl0C-lGa1dKfuPPypqbU87sCA2ATcPTPY',
     libraries: ['places'],
   });
 
   const fromRef = useRef(null);
   const toRef = useRef(null);
-
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     from: '',
     to: '',
     time: '',
-    date:'',
+    date: '',
     fromCoords: { lat: null, lng: null },
     toCoords: { lat: null, lng: null },
   });
 
-  const [activeMarker, setActiveMarker] = useState('from'); 
-  const [directionsResponse, setDirectionsResponse] = useState(null); 
+  const [activeMarker, setActiveMarker] = useState('from');
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [travelDuration, setTravelDuration] = useState(null); // New state for travel duration
 
   const handlePlaceChanged = (field) => {
     const autocomplete = field === 'from' ? fromRef.current : toRef.current;
@@ -64,6 +63,10 @@ export default function Details() {
         (response, status) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
             setDirectionsResponse(response);
+
+            // Extract travel duration
+            const duration = response.routes[0].legs[0].duration.text;
+            setTravelDuration(duration); // Set travel duration in state
           } else {
             console.error('Error fetching directions:', response);
           }
@@ -86,29 +89,29 @@ export default function Details() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form Data Submitted:', formData);
-    
-    const res=await axios.post('https://women-s-safety-app.onrender.com/api/travel-details',{
-      time:formData.time.toString(),
-      date:formData.date.toString(),
-      toCoords:{
-        lat:formData.toCoords.lat.toString(),
-        lng:formData.toCoords.lng.toString()
+
+    const res = await axios.post('https://women-s-safety-app.onrender.com/api/travel-details', {
+      time: formData.time.toString(),
+      date: formData.date.toString(),
+      toCoords: {
+        lat: formData.toCoords.lat.toString(),
+        lng: formData.toCoords.lng.toString()
       },
-      fromCoords:{
-        lat:formData.fromCoords.lat.toString(),
-        lng:formData.fromCoords.lng.toString()
+      fromCoords: {
+        lat: formData.fromCoords.lat.toString(),
+        lng: formData.fromCoords.lng.toString()
       }
-    },{
-      headers:{
-        'Authorization':localStorage.getItem('userAuthToken'),
-        'Content-Type':'application/json'
+    }, {
+      headers: {
+        'Authorization': localStorage.getItem('userAuthToken'),
+        'Content-Type': 'application/json'
       }
     });
 
-    if(res.status===200){
+    if (res.status === 200) {
       navigate('/request');
     }
   };
@@ -119,7 +122,7 @@ export default function Details() {
 
   return isLoaded ? (
     <div className="detail-card mb-3 mt-3 text-dark shadow p-4">
-      <div className="profile-image  ">
+      <div className="profile-image">
         <img src={womenpic} style={{ width: '250px' }} />
       </div>
 
@@ -183,15 +186,20 @@ export default function Details() {
             />
           </div>
 
-
           <button type="submit" className="btn btn-primary shadow w-100">
             Submit
           </button>
         </form>
-        </div>
-        <div className="map-container">
-        <GoogleMap
 
+        {travelDuration && (
+          <div className="mt-3">
+            <p><strong>Estimated Travel Duration:</strong> {travelDuration}</p>
+          </div>
+        )}
+      </div>
+
+      <div className="map-container">
+        <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={center}
           zoom={5}
