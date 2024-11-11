@@ -60,7 +60,7 @@ function Camera(){
       const formData = new FormData();
       formData.append('image', imageBlob);
 
-      const recognitionResponse = await axios.post('http://127.0.0.1:5000/api/verify',
+      const recognitionResponse = await axios.post('http://127.0.0.1:3000/api/verify',
         formData,
         {
           headers: {
