@@ -7,7 +7,7 @@ import io
 import numpy as np
 
 app = Flask(__name__)
-CORS(app)
+CORS(app,resources={r"/api/*":{"origins": "*"}})
 
 @app.route('/api/testing')
 def hello_world():

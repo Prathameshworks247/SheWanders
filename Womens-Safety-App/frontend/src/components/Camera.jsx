@@ -69,9 +69,6 @@ function Camera(){
         }
       );
 
-      console.log(recognitionResponse.data.message);
-      
-
       if(recognitionResponse.data.message==='Gender verified as male'){
         navigate('/login');
       } else{
